@@ -1,0 +1,265 @@
+`#include <stdio.h>
+`#include "object.h"
+`
+~typedef struct object {
+~	const char *description;
+~	const char **tags;
+~	struct object *location;
+~	struct object *destination;
+~	struct object *prospect;
+~	const char *details;
+~	const char *contents;
+~	const char *textgo;
+~	int weight;
+~	int capacity;
+~	int health;
+~	int value;
+~} OBJECT;
+~
+~extern OBJECT objs[];
+~
+-PLAYER
+	description "it's you"
+	tags "yourself", "me", "myself", "you"
+	location town
+	details "after all this time it's still you"
+	contents "you have"
+	health 100
+	capacity 20
+stop 
+-TUNDRA
+	description "a frigid tundra"
+	tags "tundra"
+	details "icy wind blows down from the highest peaks of the mountain, leaving a barren icy wasteland"
+	capacity 9999
+stop 
+-MOUNTAIN
+	description "a jagged rocky mountain"
+	tags "mountain"
+	details "its a mountain man idk"
+	capacity 9999
+stop 
+-FOREST
+	description "a lush green forest"
+	tags "forest"
+	details "its a forest idk"
+	capacity 9999
+stop 
+-TOWN
+	description "a bustling small town"
+	tags "town"
+	details "small town, theres people idk"
+	capacity 9999
+stop 
+-FIELD
+	description "a vast amber field, growing all the towns wheat"
+	tags "field"
+	details "field, food grow here"
+	capacity 9999
+stop 
+-CAVE
+	description "a dark cave, quiet and still"
+	tags "cave"
+	details "dark, its a cave"
+	capacity 9999
+stop 
+-TOWN_GATE
+	description "the town gate leading north to the forest"
+	tags "gate", "main gate", "town gate"
+	location town
+	destination forest
+	details "the towns main defense, an iron barred gate"
+	textgo "the gate swings open to allow you through"
+stop 
+-FOREST_GATE
+	description "the town gate, leading south into town"
+	tags "gate", "main gate", "town gate"
+	location forest
+	destination town
+	details "the towns main defense, an iron barred gate"
+	textgo "the gate swings open to allow you through"
+stop 
+-TOWN_PATH
+	description "a path leading south to the towns fields"
+	tags "path", "town path"
+	location town
+	destination field
+	details "a brick paved path winding around the back of the town"
+	textgo "you follow the path to its end"
+stop 
+-FIELD_PATH
+	description "the path leading north back into town"
+	tags "path", "town path"
+	location field
+	destination town
+	details "a brick paved path winding back into town"
+	textgo "you follow the path back into town"
+stop 
+-FIELD_TRAIL
+	description "a trail tucked away leading to the east, up into the mountain"
+	tags "trail"
+	location field
+	destination mountain
+	details "a worn old train at the back of the field, obscured by trees and bushes"
+	textgo "you push past the bushes and begin to follow the trail"
+stop 
+-MOUNTAIN_TRAIL
+	description "the trail leading west, back into the towns fields"
+	tags "trail"
+	location mountain
+	destination field
+	details "a gravelly steep trail, leading down the mountain"
+	textgo "you begin to careful decend following the trail" 
+stop 
+-MOUNTAIN_PASSAGE
+	description "a small passage on the south of the mountain, barely enough to squeeze through"
+	tags "passage", "hole", "hole?"
+	location mountain
+	destination cave
+	details "the passage is very tight, you should be able to squeeze through"
+	textgo "you begin to shimmy through the passage, but as you get through you realise you wont be able to squeeze back out"
+stop 
+-CAVE_EXIT
+	description "the only way out of the cave, taking you up north"
+	tags "exit"
+	location cave
+	destination forest
+	details "the sound of life, birds chirping and trees swaying can be heard ahead, light floods in through the opening"
+	textgo "you wander out through the exit, the bright light of day blinding you for a moment"
+stop 
+-MOUNTAIN_TRACK
+	description "a track going north along a precarious rock face"
+	tags "track"
+	location mountain
+	destination tundra
+	details "the track is along a sheer cliff, you can cross, but you feel uneasy about it"
+	textgo "you begin to shuffle along the track, back against the wall, careful not to lose your balance"
+stop 
+-TUNDRA_TRACK
+	description "a track along a precarious rock face, leading south to the mountain"
+	tags "track"
+	location tundra
+	destination mountain
+	details "the track is along a sheer cliff, you can cross, but you feel uneasy about it"
+	textgo "you begin to shuffle along the track, back against the wall, careful not to lose your balance"
+stop 
+-TOWN_WALL
+	description "the towns wall"
+	tags "east", "west"
+	location town
+	details "the wall is sturdy, it encompasses the whole town"
+	textgo "its a wall, theres no where to go"
+stop 
+-FOREST_WALL
+	description "a thick wall of trees"
+	tags "north", "east", "west"
+	location forest
+	details "the forest is so thick past here, its no traversable by humans"
+	textgo "you cant, the foliage is too thick to move through"
+stop 
+-FIELD_WALL
+	description "part of the towns wall"
+	tags "south", "west"
+	location field
+	details "the wall is sturdy, it encompasses the whole town and the towns field, apparently"
+	textgo "still a wall"
+stop 
+-CAVE_WALL
+	description "the walls of the cave"
+	tags "east", "south", "west"
+	location cave
+	details "a cold wall of stone, you are in a cave"
+	textgo "you cant dig through solid rock, or at all but you know"
+stop 
+-MOUNTAIN_WALL
+	description "a sheer cliff"
+	tags "west"
+	location mountain
+	details "the cliff is a sheer drop, it goes down a long way"
+	textgo "theres no way you can climb down there"
+stop 
+-TUNDRA_WALL
+	description "frozen wasteland"
+	tags "north", "east", "west"
+	location tundra
+	details "a vast freezing wasteland, no one could survive out there"
+	textgo "you begin to walk out into the wasteland, but you realise you didnt bring a jacket and turn back"
+stop 
+-PURSE
+	description "a leather purse"
+	tags "bag", "purse"
+	location field
+	details "a small black leather purse, with an iron buckle holding it shut"
+	contents "you unbuckle the purse and open it to see"
+	weight 2
+	value 5
+stop 
+-GOLD
+	description "some shiny gold coins"
+	tags "gold", "coin"
+	location purse
+	details "some shiny gold coins, each one stamped with the kingdoms crest, a fierce dragon breathing fire onto a shield"
+	weight 5
+	value 50
+stop 
+-LEATHER
+	description "leather"
+	tags "leather", "leather scraps", "scraps"
+	location forest
+	details "some scraps of leather, enough to work with"
+	weight 3
+	value 2
+stop 
+-IRON
+	description "an ingot of iron"
+	tags "iron", "ingot", "iron ingot"
+	location cave
+	details "a silvery grey bar of metal, cold and hard"
+	weight 10
+	value 10
+stop 
+-CRYSTAL
+	description "crystal"
+	tags "crystal", "ice"
+	location tundra
+	details "a light blue crystal, cold to the touch"
+	weight 1
+	value 30
+stop 
+-EMERALD
+	description "gemstone"
+	tags "emerald", "gem", "gemstone"
+	location mountain
+	details "the gem shines with a brilliant green hue"
+	weight 1
+	value 75
+stop 
+-GUARD
+	description "city guardsman"
+	tags "guard", "guardsman"
+	location town
+	details "the guard is fitted in plate armour and bares the kingdoms crest, a fire breathing dragon"
+	contents "he has"
+	health 150
+	capacity 20
+stop 
+-FOX
+	description "fox"
+	tags "fox", "vulpine"
+	location forest
+	details "a purple fox? very strange"
+	contents "he has"
+	health 20
+	capacity 5
+stop 
+-BUNNY
+	description "bunny"
+	tags "bunny", "rabbit"
+	location field
+	details "this bunny is actually really big for a rabbit, cute though"
+	contents "he has"
+	health 500
+	capacity 50
+stop 
+**
+**
